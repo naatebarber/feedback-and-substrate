@@ -61,3 +61,7 @@ rule.run(0.01)
 ### Next steps would be:  
  - **Algorithmic Feedback**: Add communication between sims. Be careful of overflow when a loop is established. Best way might be to have communication cycles operate between steps. Communication could be presented in the form of Sim A forcing perceptual hallucination upon Sim B. 
  - **Reinforcement Derived Feedback**: Add reinforcement learning to sims instead of having them follow an algorithm. Would be interesting to see what symbols the Sims develop without specific instruction and how they communicate.
+
+## Footnote:  
+
+Any patterns of use here in terms of greater learning or understanding will be re-written in Rust and added to TIM.

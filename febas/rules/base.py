@@ -35,7 +35,14 @@ class Rule(ABC):
             s.set_mutator(self.mutator())
             self.sims.append(s)
 
-    def run(self, delay: float):
+    @abstractmethod
+    def initialize_render(self):
+        pass
+
+    def run(self, delay: float, render=True):
+        self.initialize()
+        if render:
+            self.initialize_render()
         while True:
-            self.step()
+            self.step(render=render)
             time.sleep(delay)

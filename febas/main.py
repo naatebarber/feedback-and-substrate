@@ -9,19 +9,16 @@ def algorithmic_eat():
 
     rule.set_environment(environment=environment)
 
-    rule.initialize()
-
     rule.run(0.01)
 
 
 def reinforcement_eat():
     rule = ReinforcementEatRule(1)
-    environment = EatEnvironment(500, 16, food_density=0.02)
+    environment = EatEnvironment(500, 16, food_density=0.02, food_spawn_rate=0.01)
     environment.random_normal()
 
     rule.set_environment(environment=environment)
-    rule.initialize()
-    rule.run(0)
+    rule.run(delay=0, render=True)
 
 
 if __name__ == "__main__":

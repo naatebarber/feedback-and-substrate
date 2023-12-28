@@ -8,10 +8,17 @@ import numpy as np
 
 
 class EatEnvironment:
-    def __init__(self, dim: int, visibility: int, food_density: float = 0.01):
+    def __init__(
+        self,
+        dim: int,
+        visibility: int,
+        food_density: float = 0.01,
+        food_spawn_rate: float = 0,
+    ):
         self.dim = dim
         self.visibility = visibility
         self.food_density = food_density
+        self.food_spawn_rate = food_spawn_rate
         self.agar = []
 
     def random_normal(self):
@@ -23,11 +30,18 @@ class EatEnvironment:
             for j in range(self.dim)
         ]
 
+    def spawn_food(self):
+        if random.random() < self.food_spawn_rate:
+            x, y = (random.randint(0, self.dim - 1), random.randint(0, self.dim - 1))
+            self.agar[x][y] = 1
+
     def perspective(self, x: int, y: int):
         xs = max(0, x - self.visibility)
         xe = min(self.dim, x + self.visibility + 1)
         ys = max(0, y - self.visibility)
         ye = min(self.dim, y + self.visibility + 1)
+
+        self.spawn_food()
 
         perspective = []
         for r in range(x - self.visibility, x + self.visibility + 1):
@@ -117,6 +131,8 @@ class EatRule(Rule):
 
     def initialize(self):
         super().initialize()
+
+    def initialize_render(self):
         self.window = tk.Tk()
         self.canvas = tk.Canvas(
             self.window,
@@ -129,22 +145,28 @@ class EatRule(Rule):
         self.canvas.pack()
         self.window.update()
 
-    def step(self):
-        self.canvas.delete("all")
+    def step(self, render=True):
+        if render:
+            self.canvas.delete("all")
 
-        for i, x in enumerate(self.environment.agar):
-            for j, y in enumerate(x):
-                if y == 1:
-                    self.canvas.create_rectangle(i, j, i + 1, j + 1, outline="white")
+        if render:
+            for i, x in enumerate(self.environment.agar):
+                for j, y in enumerate(x):
+                    if y == 1:
+                        self.canvas.create_rectangle(
+                            i, j, i + 1, j + 1, outline="white"
+                        )
 
         for sim in self.sims:
             sim.become_affected()
-            self.canvas.create_rectangle(
-                sim.essence.x - self.environment.visibility,
-                sim.essence.y - self.environment.visibility,
-                sim.essence.x + self.environment.visibility,
-                sim.essence.y + self.environment.visibility,
-                outline="blue",
-            )
+            if render:
+                self.canvas.create_rectangle(
+                    sim.essence.x - self.environment.visibility,
+                    sim.essence.y - self.environment.visibility,
+                    sim.essence.x + self.environment.visibility,
+                    sim.essence.y + self.environment.visibility,
+                    outline="blue",
+                )
 
-        self.window.update()
+        if render:
+            self.window.update()

@@ -49,6 +49,9 @@ rule.run(0.01)
       - `x & y`: The coordinates of the Sim on the environment
       - `environment`: A reference to the shared environment, allowing the mutator to update the Sim's surroundings after it performs an action
     - _Mutator_ (State change function) in its first iteration is an algorithm that moves the sim towards the closest mote of food, and once `sim.x == mote.x && sim.y == mote.y`, consumes the food, removing it from the environment.
+  - **Reinforcement Eat** Same as eat except:
+    - _Essence_ Sim state includes a Deep Q Network for reinforcement learning
+    - _Mutator_ Constantly predicts and trains the network using state
 
 ## Rule Creation
 

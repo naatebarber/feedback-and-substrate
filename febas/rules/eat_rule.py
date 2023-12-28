@@ -4,17 +4,22 @@ import tkinter as tk
 from typing import Callable, Any
 from febas.rules.base import Rule
 from febas.sim import Sim
+import numpy as np
 
 
 class EatEnvironment:
-    def __init__(self, dim: int, visibility: int):
+    def __init__(self, dim: int, visibility: int, food_density: float = 0.01):
         self.dim = dim
         self.visibility = visibility
+        self.food_density = food_density
         self.agar = []
 
     def random_normal(self):
         self.agar = [
-            [(1 if random.random() > 0.99 else 0) for i in range(self.dim)]
+            [
+                (1 if random.random() > (1 - self.food_density) else 0)
+                for i in range(self.dim)
+            ]
             for j in range(self.dim)
         ]
 
@@ -37,13 +42,6 @@ class EatEnvironment:
 
                 subrow.append(self.agar[r][v])
             perspective.append(subrow)
-
-        # perspective = []
-        # for row in self.agar[xs:xe]:
-        #     subrow = []
-        #     for v in row[ys:ye]:
-        #         subrow.append(v)
-        #     perspective.append(subrow)
 
         return perspective
 

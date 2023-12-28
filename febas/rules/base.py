@@ -1,13 +1,11 @@
 from abc import abstractmethod, ABC
 from typing import Callable, Any, List
-from ipycanvas import Canvas, hold_canvas
 from febas.sim import Sim
 import time
 
 
 class Rule(ABC):
     def __init__(self, pop_size: int):
-        self.canvas = Canvas()
         self.pop_size = pop_size
         self.sims: List[Sim] = []
         self.environment = None

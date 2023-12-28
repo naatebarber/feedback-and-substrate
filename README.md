@@ -4,7 +4,7 @@ In reading I Am A Strange Loop by Doug Hofstader I thought it'd be cool to try a
 
 ## Overview:  
 
-Using the `Sim` class and the abstract `Rule` class, create a continuois space where Sim agents can constantly percieve and interact.
+Using the `Sim` class and the abstract `Rule` class, create a continuous space where Sim agents can constantly percieve and interact.
 
 I'm currently using tkinter to visualize stuff but you really don't have to do all that. Try to get funky with CLI output if you wanna.
 

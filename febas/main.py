@@ -13,12 +13,12 @@ def algorithmic_eat():
 
 
 def reinforcement_eat():
-    rule = ReinforcementEatRule(1)
+    rule = ReinforcementEatRule(1, learn=True)
     environment = EatEnvironment(500, 16, food_density=0.02, food_spawn_rate=0.01)
     environment.random_normal()
 
     rule.set_environment(environment=environment)
-    rule.run(delay=0, render=True)
+    rule.run(delay=0, render=False)
 
 
 if __name__ == "__main__":

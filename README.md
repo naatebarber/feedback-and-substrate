@@ -68,3 +68,7 @@ rule.run(0.01)
 ## Footnote:  
 
 Any patterns of use here in terms of greater learning or understanding will be re-written in Rust and added to TIM.
+
+
+# Notes
+  - In reinforcement learning, if the state you feed your model doesn't include anything temporal, don't make your reward grow over time. This makes it harder for the model to understand a relationship between its actions and reward since one exists in an inaccessible dimension.

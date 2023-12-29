@@ -42,10 +42,10 @@ class EatEnvironment:
             subrow = []
             for v in range(y - self.visibility, y + self.visibility + 1):
                 if r < 0 or r > self.dim - 1:
-                    subrow.append(-1)
+                    subrow.append(0)
                     continue
                 if v < 0 or v > self.dim - 1:
-                    subrow.append(-1)
+                    subrow.append(0)
                     continue
 
                 subrow.append(self.agar[r][v])

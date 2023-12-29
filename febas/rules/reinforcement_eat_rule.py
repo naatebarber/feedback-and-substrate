@@ -8,7 +8,8 @@ import numpy as np
 from copy import deepcopy
 import math
 
-from febas.rules.eat_rule import EatEnvironment, EatRule, Essence
+from febas.environments.eat import EatEnvironment
+from febas.rules.eat_rule import EatRule, Essence
 from febas.sim import Sim
 
 

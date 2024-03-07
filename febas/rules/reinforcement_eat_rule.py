@@ -21,6 +21,9 @@ class Brain(nn.Module):
         if torch.backends.mps.is_available():
             print("using mps")
             self.device = torch.device("mps")
+        elif torch.cuda.is_available():
+            print("using cuda")
+            self.device = torch.device("cuda")
         else:
             self.device = torch.device("cpu")
 
@@ -71,7 +74,7 @@ class Brain(nn.Module):
         q_values = self.forward(state)
         q_value = q_values.gather(1, action.unsqueeze(1)).squeeze(1)
 
-        print(q_value)
+        # print(q_value)
 
         next_q_values = self.forward(next_state).detach()
         # print(next_q_values)
@@ -138,7 +141,6 @@ class ReinforcementEatRule(EatRule):
             # Add reward for eating
             reward = 0
             if self.environment.agar[ess.x][ess.y] == 1:
-                print("Sim ATE")
                 ess.eat_count += mote_ate_reward
                 reward += mote_ate_reward
                 self.environment.agar[ess.x][ess.y] = 0
@@ -152,11 +154,11 @@ class ReinforcementEatRule(EatRule):
 
             ess.step_counter += 1
 
-            if ess.step_counter % 1000 == 0:
+            if ess.step_counter % 10000 == 0:
                 print("Checkpoint")
-                print("Total ate:", ess.eat_count)
-                print("Current reward:", reward)
+                print("Total ate this stage:", ess.eat_count)
                 print("Current epsilon:", ess.epsilon)
+                ess.eat_count = 0
                 torch.save(ess.brain.state_dict(), "./q-sim.pth")
 
         return hungry_sim
